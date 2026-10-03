@@ -6,7 +6,7 @@ onMounted(async () => { lanes.value = (await api('/refills/full?location_id=1'))
 </script>
 <template>
   <h1>满仓</h1>
-  <p class="sub">缺口为 0 的货道（无需补货）</p>
+  <p class="sub">缺口为 0 的货道（无需补货 · 超占道不计入）</p>
   <div class="card">
     <table>
       <thead><tr><th>货道</th><th>商品</th><th>库存</th><th>在途</th><th>容量</th></tr></thead>

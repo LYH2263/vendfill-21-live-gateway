@@ -21,3 +21,12 @@ def test_full_zero_fill():
     s = summarize(build_fill_lines(lanes))
     assert s["full_count"] == 1
     assert s["total_fill"] == 0
+
+def test_requested_cannot_inflate_overbooked_or_full():
+    lanes = [
+        {"id": 1, "slot_no": "A1", "sku_name": "水", "capacity": 10, "stock": 12, "in_transit": 0},
+        {"id": 2, "slot_no": "A2", "sku_name": "茶", "capacity": 10, "stock": 8, "in_transit": 2},
+    ]
+    lines = build_fill_lines(lanes, requested={1: 9, 2: 9})
+    assert lines[0].fill_qty == 0 and lines[0].status == "overbooked"
+    assert lines[1].fill_qty == 0 and lines[1].status == "full"
